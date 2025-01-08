@@ -1,32 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { getMotionStatus } from '../services/api';
+import React, { useState, useEffect } from "react";
+import { writeData } from "../firebase/config";
 
-const MotionStatus: React.FC = () => {
-    const [motionDetected, setMotionDetected] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(true);
+const MotionDetection = () => {
+  const [motionDetected, setMotionDetected] = useState(false);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const status = await getMotionStatus();
-                setMotionDetected(status);
-            } catch (error) {
-                console.error('Error fetching motion status:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchData();
-    }, []);
+  useEffect(() => {
+    // Simulate motion detection (or integrate with your ESP32 here)
+    const motionInterval = setInterval(() => {
+      setMotionDetected((prev) => !prev);
+    }, 5000);
 
-    if (loading) return <p>Loading...</p>;
+    return () => clearInterval(motionInterval);
+  }, []);
 
-    return (
-        <div>
-            <h2>Motion Detection Status</h2>
-            <p>{motionDetected ? 'Motion Detected!' : 'No Motion Detected'}</p>
-        </div>
-    );
+  useEffect(() => {
+    // Update Firebase when motion is detected
+    writeData("/motionDetected", motionDetected);
+  }, [motionDetected]);
+
+  return (
+    <div>
+      <h2>Motion Detection</h2>
+      <p>{motionDetected ? "Motion Detected!" : "No Motion"}</p>
+    </div>
+  );
 };
 
-export default MotionStatus;
+export default MotionDetection;

@@ -1,18 +1,19 @@
 #include <WiFi.h>
-#include <FirebaseESP32.h>
+#include <Firebase_ESP_Client.h>
 
-// Wi-Fi credentials
-#define WIFI_SSID "Your_SSID"
-#define WIFI_PASSWORD "Your_Password"
+// Provide the Wi-Fi credentials
+#define WIFI_SSID "HP-GTR-Network"
+#define WIFI_PASSWORD "123456789"
 
-// Firebase credentials
-#define FIREBASE_HOST "https://iot-cw-1cb83-default-rtdb.firebaseio.com/"
-#define FIREBASE_AUTH "Your_Firebase_Database_Secret"
+// Firebase project credentials
+#define FIREBASE_PROJECT_ID "iot-cw-1cb83"
+#define FIREBASE_API_KEY "AIzaSyB9Iozkn0yr4u6F5LT6ioOf9md1CcmcmQk"
+#define FIREBASE_AUTH_TOKEN "Your_Auth_Token"
 
 // Firebase objects
-FirebaseConfig firebaseConfig;
-FirebaseAuth firebaseAuth;
-FirebaseData firebaseData;
+FirebaseData fbdo;
+FirebaseAuth auth;
+FirebaseConfig config;
 
 // GPIO pins
 const int pirPin = 4;
@@ -34,13 +35,15 @@ void setup() {
   }
   Serial.println("\nConnected to Wi-Fi");
 
-  // Configure Firebase
-  firebaseConfig.host = FIREBASE_HOST;
-  firebaseConfig.api_key = FIREBASE_AUTH;
-  firebaseConfig.token_status_callback = tokenStatusCallback; // Optional
+  // Firebase configuration
+  config.api_key = FIREBASE_API_KEY;
+  config.database_url = "https://" FIREBASE_PROJECT_ID ".firebaseio.com";
 
-  Firebase.begin(&firebaseConfig, &firebaseAuth);
+  // Authentication (using Auth token or Anonymous login)
+  auth.token.uid = FIREBASE_AUTH_TOKEN;
 
+  // Initialize Firebase
+  Firebase.begin(&config, &auth);
   Serial.println("Firebase initialized");
 }
 
@@ -52,15 +55,19 @@ void loop() {
     digitalWrite(ledPin, HIGH);
 
     // Update Firebase
-    if (Firebase.RTDB.setBool(&firebaseData, "/motionDetected", true)) {
+    if (Firebase.RTDB.setBool(&fbdo, "/motionDetected", true)) {
       Serial.println("Data sent to Firebase");
     } else {
       Serial.println("Failed to send data to Firebase");
-      Serial.println(firebaseData.errorReason());
+      Serial.println(fbdo.errorReason());
     }
   } else {
     digitalWrite(ledPin, LOW);
-    Firebase.RTDB.setBool(&firebaseData, "/motionDetected", false);
+
+    if (!Firebase.RTDB.setBool(&fbdo, "/motionDetected", false)) {
+      Serial.println("Failed to send data to Firebase");
+      Serial.println(fbdo.errorReason());
+    }
   }
 
   delay(1000); // Delay for stability
