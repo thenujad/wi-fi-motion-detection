@@ -1,14 +1,13 @@
 #include <WiFi.h>
 #include <Firebase_ESP_Client.h>
 
-// Provide the Wi-Fi credentials
-#define WIFI_SSID "HP-GTR-Network"
-#define WIFI_PASSWORD "123456789"
+// Wi-Fi credentials
+#define WIFI_SSID "HUAWEI Y7a"              // Your Wi-Fi SSID
+#define WIFI_PASSWORD "12345678"            // Your Wi-Fi password
 
 // Firebase project credentials
-#define FIREBASE_PROJECT_ID "iot-cw-1cb83"
-#define FIREBASE_API_KEY "AIzaSyB9Iozkn0yr4u6F5LT6ioOf9md1CcmcmQk"
-#define FIREBASE_AUTH_TOKEN "Your_Auth_Token"
+#define FIREBASE_PROJECT_ID "iot-motion-app"  // Your Firebase project ID
+#define FIREBASE_API_KEY "AIzaSyDF3BzX13uilp4W0EK0f222LW4salTv1tE"     // Your Firebase API key
 
 // Firebase objects
 FirebaseData fbdo;
@@ -16,15 +15,15 @@ FirebaseAuth auth;
 FirebaseConfig config;
 
 // GPIO pins
-const int pirPin = 4;
-const int ledPin = 2;
+const int pirPin = 13;
+const int led_01_Pin = 2;
 
 void setup() {
   Serial.begin(115200);
 
   // Set pin modes
   pinMode(pirPin, INPUT);
-  pinMode(ledPin, OUTPUT);
+  pinMode(led_01_Pin, OUTPUT);
 
   // Connect to Wi-Fi
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -39,8 +38,8 @@ void setup() {
   config.api_key = FIREBASE_API_KEY;
   config.database_url = "https://" FIREBASE_PROJECT_ID ".firebaseio.com";
 
-  // Authentication (using Auth token or Anonymous login)
-  auth.token.uid = FIREBASE_AUTH_TOKEN;
+  // Anonymous authentication (No need for a UID)
+  auth.token.uid = ""; // Leave it empty for anonymous login
 
   // Initialize Firebase
   Firebase.begin(&config, &auth);
@@ -52,9 +51,9 @@ void loop() {
 
   if (motionDetected) {
     Serial.println("Motion detected!");
-    digitalWrite(ledPin, HIGH);
+    digitalWrite(led_01_Pin, HIGH);
 
-    // Update Firebase
+    // Update Firebase with motion status
     if (Firebase.RTDB.setBool(&fbdo, "/motionDetected", true)) {
       Serial.println("Data sent to Firebase");
     } else {
@@ -62,8 +61,9 @@ void loop() {
       Serial.println(fbdo.errorReason());
     }
   } else {
-    digitalWrite(ledPin, LOW);
+    digitalWrite(led_01_Pin, LOW);
 
+    // Update Firebase with motion status
     if (!Firebase.RTDB.setBool(&fbdo, "/motionDetected", false)) {
       Serial.println("Failed to send data to Firebase");
       Serial.println(fbdo.errorReason());

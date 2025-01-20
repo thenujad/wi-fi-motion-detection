@@ -5,7 +5,7 @@ const serviceAccount = require("./serviceAccountKey.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://iot-cw-1cb83-default-rtdb.firebaseio.com", // Firebase Realtime Database URL
+  databaseURL: "https://iot-motion-app-default-rtdb.firebaseio.com", // Firebase Realtime Database URL
 });
 
 // Firebase Realtime Database reference

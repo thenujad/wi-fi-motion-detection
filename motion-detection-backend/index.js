@@ -10,7 +10,7 @@ app.use(express.json());
 const serviceAccount = require("./serviceAccountKey.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://iot-cw-1cb83-default-rtdb.firebaseio.com/",
+  databaseURL: "https://iot-motion-app-default-rtdb.firebaseio.com",
 });
 const db = admin.database();
 
