@@ -35,7 +35,7 @@ const MotionStatus: React.FC = () => {
       }}
     >
       <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>
-        IoT Motion Dashboard
+      Real-Time IoT Motion Status
       </h1>
       <div
         style={{
