@@ -1,29 +1,59 @@
-import React, { useState, useEffect } from "react";
-import { writeData } from "../firebase/config";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { FiActivity } from "react-icons/fi";
 
-const MotionDetection = () => {
-  const [motionDetected, setMotionDetected] = useState(false);
+const MotionStatus: React.FC = () => {
+  const [motionDetected, setMotionDetected] = useState<boolean>(false);
 
   useEffect(() => {
-    // Simulate motion detection (or integrate with your ESP32 here)
-    const motionInterval = setInterval(() => {
-      setMotionDetected((prev) => !prev);
-    }, 5000);
+    // Fetch motion status from the backend
+    const fetchMotionStatus = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/motion-status");
+        setMotionDetected(response.data.motionDetected);
+      } catch (error) {
+        console.error("Error fetching motion status:", error);
+      }
+    };
 
-    return () => clearInterval(motionInterval);
+    fetchMotionStatus();
+
+    // Polling for real-time updates
+    const interval = setInterval(fetchMotionStatus, 2000);
+    return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    // Update Firebase when motion is detected
-    writeData("/motionDetected", motionDetected);
-  }, [motionDetected]);
-
   return (
-    <div>
-      <h2>Motion Detection</h2>
-      <p>{motionDetected ? "Motion Detected!" : "No Motion"}</p>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        flexDirection: "column",
+        fontFamily: "Arial, sans-serif",
+      }}
+    >
+      <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>
+        IoT Motion Dashboard
+      </h1>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          padding: "1rem",
+          borderRadius: "8px",
+          backgroundColor: motionDetected ? "#ff4d4d" : "#4caf50",
+          color: "#fff",
+          fontSize: "1.5rem",
+          boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
+        }}
+      >
+        <FiActivity size={30} style={{ marginRight: "0.5rem" }} />
+        {motionDetected ? "Motion Detected!" : "No Motion"}
+      </div>
     </div>
   );
 };
 
-export default MotionDetection;
+export default MotionStatus;

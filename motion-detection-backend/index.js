@@ -1,25 +1,53 @@
 const express = require("express");
-const admin = require("firebase-admin");
 const cors = require("cors");
+const bodyParser = require("body-parser");
+const admin = require("firebase-admin");
 
-const app = express();
-app.use(cors());
-app.use(express.json());
+// Initialize Firebase Admin SDK
+const serviceAccount = require("./firebase-config.json");
 
-// Firebase setup
-const serviceAccount = require("./serviceAccountKey.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://iot-motion-app-default-rtdb.firebaseio.com",
+  databaseURL: "https://iot-motion-app-default-rtdb.firebaseio.com/",
 });
+
 const db = admin.database();
+const app = express();
+const PORT = 5000;
 
-// Endpoint to get motion data
-app.get("/motion", async (req, res) => {
-  const ref = db.ref("motionDetected");
-  ref.once("value", (snapshot) => {
-    res.send({ motionDetected: snapshot.val() });
-  });
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
+
+// Endpoint to get motion status
+app.get("/motion-status", async (req, res) => {
+  try {
+    const ref = db.ref("motionDetected");
+    ref.once("value", (snapshot) => {
+      res.json({ motionDetected: snapshot.val() });
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch motion status" });
+  }
 });
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+// Endpoint to update motion status
+app.post("/motion-status", async (req, res) => {
+  const { motionDetected } = req.body;
+  try {
+    const ref = db.ref("motionDetected");
+    ref.set(motionDetected, (error) => {
+      if (error) {
+        res.status(500).json({ error: "Failed to update motion status" });
+      } else {
+        res.json({ message: "Motion status updated successfully" });
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to update motion status" });
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Backend running on http://localhost:${PORT}`);
+});

@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "iot-motion-app",
+  "private_key_id": "215fb90ec97aeec403d95832208fa338a0d02f8f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCwR3UI/l8Cm02u\nUUh1klEDplew40qJj4YlkC93Go08eEPNmNqpozu86Q+fyum5PHSKWnxA6wCID+k7\nP3scjdt4hE901F51HTVS5NUr8fim/Xllce/QFFVou5U73IfIpPM+Yk+ySpCzrOw5\nDfxWgh+SoD6Emy3vDAMYdpzXj0Y82o0kuhIM13julwQBFS75Zs+KqYyRJoCFYU9Q\n1klRN9IyL0GFmti9yltNlEBUo6trrCgUc3TG0xJPvlhrsAG7LqPTwEBeCHPiBA+l\nZv8hUQMTQoVNSq959cYeMlGr8MtEavrF3AT8KSOZZl/f4jh6o37WpPT7eqhPyixL\nN1Z2juj1AgMBAAECggEAAYF9bUgS/V2LQn/HloLbS08v9Om0I3cE5oGT+ONSrTS6\ndjal44i/7rivnVCpQh+olTKkWL+ef7W3FdOl1Glyeas+Vy6l5z/fypH8L4W/zIQM\ny0I3vLd3v/nI6BErCG/pngZOok9twK3WT2nLATLXsd50OkNtwdrV6e8VdD1GlH17\n0UrrNscY7xcDEkPoHhRUI0cW+FM7jMSaS85Mrb+A23YSSBXtq1PHUNyVs359hCzx\nAwnkireq3nlQFSmwUaZ/+dNotkDUiQBg8Ym7t9OphK5O588GYULzQcUAsb4qwE6e\nyZsjJ1CAi1TblwszU5EaVe9OSexuKV3IqXe0FXSsQQKBgQDbCRno+dwx5i1gsVrt\n9cJWneANJ6mXBY2WzZcFyoQSJzPAtQ5iBw3yvgRwL6kZLGaCBOhmwAEzBgNTXqPl\nPqBJv47T/1/U1bn22mRFJ+AHObPdbgvJr3XGWO15YeNjXjqYgNC7/vaG4OMpdrGP\n+zki9G5zWsNT61V026re/b27IQKBgQDOBysrk1WlTJJqGdrZwHJ0EyuzDBxBOGv3\nICBUCuzJIONij/nxEkq1jFR9kczDLScT5JpCtzvYXTvyUEuubp2c69pLXxjAWpmJ\nPtmbTyjhecKrehEB2+DICNPWWQ22o6MxnlL1jsUVD6tCpmioc6J/E6/PyzgXSUXV\nHr+BiRXnVQKBgE9yVqaNclPbFFx9F+k1+d5m9yxuVXIEvp2TRpMAKLVY6MmeInBl\n9KY2S+/RKbmKxEemthEG1aiHJs+nhTUSaRs20vyMJVtShlhGUJZQ505XnKjVUItA\nDCz8dm5PliWluQU1vABkc1Dq4xpYBgGectP96s4GftDCjEWNo8WsLZRhAoGBAJhc\nsM5O7R2LXRPd/vzd10aEDuMgZ5zL7vwY5A+C7M1o5v+y3fIrxtgv6SPbuQP11lpd\nyr7f5wABIx31x6I9541u1ka7EwDdf4IB2seCaQcmFpLdeMpZIwiLjq2LuhqBNWSy\nY0N5y8HhjpOBoRBCQ7+afYA8F0URSPVtAc735BzpAoGAMCZCTDuECd+lIa4JOW8s\n3/aWhA7CPSxCuGd1XPe8SZZ7fzu2owtAU6Q8cFBem5qE4u7VJKst47udtC2FAuu8\na8nFkNEPVeGu4sfdMySkV18qS/Ua2NCcJtQFTt+bG7Xd83FoLpi41kcLJ2OXEfxI\nLpg5KT0Mw1eiestqnggJCxI=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-fbsvc@iot-motion-app.iam.gserviceaccount.com",
+  "client_id": "110597547304430626459",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40iot-motion-app.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
